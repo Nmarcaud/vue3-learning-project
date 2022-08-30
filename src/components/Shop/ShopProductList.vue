@@ -1,6 +1,6 @@
 <template>
     <div class="grid p-3" >
-        <ShopProduct v-for="product in products" :product="product"/>
+        <ShopProduct v-for="product in products" :product="product" :key="product.id" @add-product-to-cart="emit('addProductToCart', $event)" />
     </div>
 </template>
 
@@ -11,7 +11,11 @@
     
     defineProps<{
         products: ProductInterface[]
-    }>()
+    }>();
+
+    const emit = defineEmits<{
+        (e: 'addProductToCart', productId: number): void
+    }>();
 
 </script>
 

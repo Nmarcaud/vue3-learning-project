@@ -1,6 +1,6 @@
 <template>
     <div class="m-3 p-4 shop">
-        <ShopProductList :products="products" />
+        <ShopProductList :products="products" @add-product-to-cart="emit('addProductToCart', $event)" />
     </div>
 </template>
 
@@ -12,6 +12,10 @@
     defineProps<{
         products: ProductInterface[]
     }>()
+
+    const emit = defineEmits<{
+        (e: 'addProductToCart', productId: number): void
+    }>();
 
 
 </script>

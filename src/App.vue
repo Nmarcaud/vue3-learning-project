@@ -1,8 +1,20 @@
 <template>
   <div class="app-container">
     <TheHeader class="header" />
-    <Shop :products="products" class="shop" />
-    <Cart class="cart" />
+
+    <!-- 
+      Si l'évent "add-product-to-cart" se produit alors on invoque la methode "addProductToCart" 
+    -->
+    <Shop 
+      :products="state.products" 
+      @add-product-to-cart="addProductToCart" 
+      class="shop" />
+
+    <Cart 
+      :cart="state.cart" 
+      class="cart" 
+      @remove-product-from-cart="removeProductFromCart" />
+
     <TheFooter class="footer" />
   </div>
 </template>
@@ -18,7 +30,32 @@
   import type { ProductInterface } from './interfaces/productinterface'
   import { reactive } from 'vue'
 
-  const products = reactive<ProductInterface[]>(data);
+
+  const state = reactive<{
+    products: ProductInterface[],
+    cart: ProductInterface[],
+  }>({
+    products: data,
+    cart: []
+  })
+
+
+  function addProductToCart(productId: number): void {
+    // On va chercher le produit
+    const product = state.products.find(product => product.id === productId);
+
+    // On vérifie si déjà présent dans le cart
+    if (product && !state.cart.find(product => product.id === productId)) {
+      state.cart.push({...product}); // Déconstruction nécessaire afin de créer un nouveau product ( non lié à celui affiché )
+    }
+  }
+
+  function removeProductFromCart(productId: number): void {
+    // On met à jour le cart avec un filter qui ne garde que les éléméents ne contenant pas l'id du produit
+    state.cart = state.cart.filter(product => product.id !== productId) // Déconstruction nécessaire afin de créer un nouveau product ( non lié à celui affiché )
+  }
+
+
 </script>
 
 

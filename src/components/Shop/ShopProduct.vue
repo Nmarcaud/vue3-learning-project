@@ -6,7 +6,7 @@
             <p>{{ product.description }}</p>
             <div class="d-flex align-items-center">
                 <strong class="flex-fill">Prix : {{ product.price }}€</strong>
-                <button class="btn btn-secondary">Buy it</button>
+                <button class="btn btn-secondary" @click="emit('addProductToCart', product.id)">Buy it</button>
             </div>
         </div>
     </div>
@@ -18,7 +18,12 @@
     
     defineProps<{
         product: ProductInterface
-    }>()
+    }>();
+
+    const emit = defineEmits<{
+        (e: 'addProductToCart', productId: number): void
+    }>();
+
 </script>
 
 
