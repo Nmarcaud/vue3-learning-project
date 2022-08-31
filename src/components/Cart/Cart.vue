@@ -1,22 +1,32 @@
 <template>
-    <div class="bg-white p-4">
+    <div class="bg-white p-4 d-flex flex-column">
         <h1>Cart</h1>
-        <CartProductList :cart="cart" @remove-product-from-cart="emit('removeProductFromCart', $event)" />
+        <CartProductList 
+            class="flex-fill"
+            :cart="cart" 
+            @remove-product-from-cart="emit('removeProductFromCart', $event)" />
+        <button class="btn btn-success">Commander {{ totalPrice }}€</button>
     </div>
 </template>
 
 
 <script setup lang="ts">
-    import type { ProductInterface } from "@/interfaces/productinterface";
+    import type { ProductCartInterface } from "@/interfaces";
+    import { computed } from "vue";
     import CartProductList from "./CartProductList.vue";
 
-    defineProps<{
-        cart: ProductInterface[]
+    const props = defineProps<{
+        cart: ProductCartInterface[]
     }>();
+
+    const totalPrice = computed(() => props.cart.reduce((acc, product) => {
+        return acc + product.quantity * product.price
+    }, 0 ));
 
     const emit = defineEmits<{
         (e: 'removeProductFromCart', productId: number): void
     }>();
+
 </script>
 
 

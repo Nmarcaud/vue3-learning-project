@@ -5,8 +5,8 @@
             <button class="btn btn-sm btn-danger" @click="emit('removeProductFromCart', product.id)">Suppr</button>
         </div>
         <div class="d-flex justify-content-between align-items-center">
-            <p class="mb-0 dg-1">Quantité : 2 | Prix : {{ product.price }}€</p>
-            <strong class="mb-0">Total : 3 000€</strong>
+            <p class="mb-0 dg-1">Quantité : {{ product.quantity }} | Prix : {{ product.price }}€</p>
+            <strong class="mb-0">Total : {{ product.quantity * product.price }}€</strong>
         </div>
     </div>
     
@@ -14,10 +14,10 @@
 
 
 <script setup lang="ts">
-import type { ProductInterface } from '@/interfaces/productinterface';
+import type { ProductCartInterface } from '@/interfaces';
 
     defineProps<{
-        product: ProductInterface
+        product: ProductCartInterface
     }>();
 
     const emit = defineEmits<{

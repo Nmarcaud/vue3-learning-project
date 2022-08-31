@@ -1,12 +1,15 @@
 <template>
-    <div class="m-3 p-4 shop">
-        <ShopProductList :products="products" @add-product-to-cart="emit('addProductToCart', $event)" />
+    <div class="m-3 p-4">
+        <ShopProductList 
+            class="overflow"
+            :products="products" 
+            @add-product-to-cart="emit('addProductToCart', $event)" />
     </div>
 </template>
 
 
 <script setup lang="ts">
-    import type { ProductInterface } from '@/interfaces/productinterface';
+    import type { ProductInterface } from '@/interfaces';
     import ShopProductList from './ShopProductList.vue';
 
     defineProps<{
@@ -22,8 +25,9 @@
 
 
 <style lang="scss" scoped>
-    .shop {
-        overflow-y: auto;
+    .overflow {
+        max-height: 90vh;
+        overflow: scroll;
     }
 </style>
   

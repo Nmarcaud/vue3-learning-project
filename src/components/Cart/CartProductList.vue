@@ -7,17 +7,15 @@
 
 <script setup lang="ts">
     import CartProduct from "./CartProduct.vue";
-    import type { ProductInterface } from "@/interfaces/productinterface";
+    import type { ProductCartInterface } from "@/interfaces";
     
     defineProps<{
-        cart: ProductInterface[]
+        cart: ProductCartInterface[]
     }>()
 
     const emit = defineEmits<{
         (e: 'removeProductFromCart', productId: number): void
     }>();
-
-    
 
 </script>
 
